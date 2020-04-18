@@ -40,5 +40,18 @@ namespace MovieMark.Repository
             }
             return listaSerie;
         }
+
+        public Serie GetById(int id)
+        {
+            var serie = contexto.Set<Serie>().FirstOrDefault(x => x.Id == id);
+            var listaTemporada = contexto.Set<Temporada>().Where(x => x.SerieId == serie.Id).ToList();
+            foreach (var temporada in listaTemporada)
+            {
+                var listaEpisodio = contexto.Set<Episodio>().Where(x => x.TemporadaId == temporada.Id).ToList();
+                temporada.ListaEpisodio = listaEpisodio;
+            }
+            serie.ListaTemporada = listaTemporada;
+            return serie;
+        }
     }
 }

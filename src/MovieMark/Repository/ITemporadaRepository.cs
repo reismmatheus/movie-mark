@@ -8,7 +8,7 @@ namespace MovieMark.Repository
 {
     interface ITemporadaRepository
     {
-        void Insert(Temporada);
+        void Insert(Temporada temporada);
         List<Temporada> GetAll();
         Temporada Get(int id);
     }

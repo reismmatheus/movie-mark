@@ -8,7 +8,8 @@ namespace MovieMark.Repository
 {
     public interface ISerieRepository
     {
-        void Insert(Serie);
+        void Insert(Serie serie);
         List<Serie> GetAll();
+        Serie GetById(int id);
     }
 }

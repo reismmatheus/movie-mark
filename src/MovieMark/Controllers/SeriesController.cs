@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MovieMark.Repository;
+using static MovieMark.Models.DatabaseMode;
+using static MovieMark.Models.SeriesViewModels;
 
 namespace MovieMark.Controllers
 {
+    [Authorize]
     public class SeriesController : Controller
     {
         private readonly ISerieRepository serieRepository;
@@ -19,30 +23,37 @@ namespace MovieMark.Controllers
         // GET: Series
         public ActionResult Index()
         {
-            var teste = serieRepository.GetAll();
-            return View();
+            var model = new SeriesIndexViewModel();
+            model.ListaSerie = serieRepository.GetAll();
+            return View(model);
         }
 
         // GET: Series/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var model = new SeriesDetailsViewModel();
+            model.Serie = serieRepository.GetById(id);
+            return View(model);
         }
 
         // GET: Series/Create
         public ActionResult Create()
         {
-            return View();
+            var model = new SeriesCreateViewModel();
+            return View(model);
         }
 
         // POST: Series/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(SeriesCreateViewModel model)
         {
             try
             {
-                // TODO: Add insert logic here
+                serieRepository.Insert(new Serie() 
+                { 
+                    Nome = model.Nome
+                });
 
                 return RedirectToAction(nameof(Index));
             }
