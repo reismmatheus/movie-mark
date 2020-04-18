@@ -19,13 +19,30 @@ namespace MovieMark.Repository
         {
         }
 
-        public void Insert()
+        public void Insert(Temporada temporada)
         {
+            contexto.Set<Temporada>().Add(temporada);
+            contexto.SaveChanges();
         }
 
         public List<Temporada> GetAll()
         {
             return contexto.Set<Temporada>().ToList();
+        }
+
+        public Temporada Get(int id)
+        {
+            var temporada = contexto.Set<Temporada>().Where(x => x.Id == id).FirstOrDefault();
+            foreach (var episodio in temporada.ListaEpisodio)
+            {
+                temporada.ListaEpisodio.AddRange(contexto.Set<Episodio>().Where(x => x.TemporadaId == temporada.Id).ToList());
+            }
+            return temporada;
+        }
+
+        public List<Temporada> GetByIdSerie(int id)
+        {
+            return contexto.Set<Temporada>().Where(x => x.SerieId == id).ToList();
         }
     }
 }

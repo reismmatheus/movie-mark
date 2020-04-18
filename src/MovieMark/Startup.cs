@@ -69,6 +69,8 @@ namespace MovieMark
             });
 
             services.AddTransient<ISerieRepository, SerieRepository>();
+            services.AddTransient<ITemporadaRepository, TemporadaRepository>();
+            services.AddTransient<IEpisodioRepository, EpisodioRepository>();
 
         }
 

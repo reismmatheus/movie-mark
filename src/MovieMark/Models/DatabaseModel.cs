@@ -28,12 +28,14 @@ namespace MovieMark.Models
             [Required]
             public string Nome { get; set; }
             public List<Episodio> ListaEpisodio { get; set; }
+            public int SerieId { get; set; }
         }
 
         public class Episodio : BaseModel
         {
             [Required]
             public string Nome { get; set; }
+            public int TemporadaId { get; set; }
         }
     }
 }
