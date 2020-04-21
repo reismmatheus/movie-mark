@@ -19,7 +19,7 @@
                     <h2>Todas as Séries</h2>
                 </div>
                 <div class="py-2 bd-highlight">
-                    <button type="button" class="btn btn-primary">Adicionar</button>
+                    <button type="button" class="btn btn-primary" onclick="AddSerie()">Adicionar Série</button>
                 </div>
             </div>
         </div>
@@ -82,6 +82,11 @@
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 
     <script>
+        function AddSerie() {
+            window.location.href = "@Url.Action("Create", "Series")"
+        }
+
+        //DataTable
         $(document).ready(function () {
             $('#table-temporada').DataTable({
                 "language": {

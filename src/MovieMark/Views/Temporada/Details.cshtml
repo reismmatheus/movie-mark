@@ -1,0 +1,33 @@
+﻿@model MovieMark.Models.TemporadaViewModels.TemporadaDetailsViewModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between">
+                <div class="py-2 bd-highlight">
+                    <h2>@Model.Temporada.Nome</h2>
+                </div>
+                <div class="py-2 bd-highlight">
+                    <button type="button" class="btn btn-primary" onclick="AddTemporada(@Model.Temporada.Id)">Adicionar Temporada</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            @foreach (var episodio in Model.Temporada.ListaEpisodio)
+            {
+                <p>@episodio.Nome</p>
+            }
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+}

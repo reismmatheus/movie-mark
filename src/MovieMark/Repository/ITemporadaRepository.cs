@@ -6,7 +6,7 @@ using static MovieMark.Models.DatabaseMode;
 
 namespace MovieMark.Repository
 {
-    interface ITemporadaRepository
+    public interface ITemporadaRepository
     {
         void Insert(Temporada temporada);
         List<Temporada> GetAll();

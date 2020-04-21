@@ -3,52 +3,55 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MovieMark.Repository;
 using static MovieMark.Models.DatabaseMode;
-using static MovieMark.Models.SeriesViewModels;
+using static MovieMark.Models.TemporadaViewModels;
 
 namespace MovieMark.Controllers
 {
     [Authorize]
-    public class SeriesController : Controller
+    public class TemporadaController : Controller
     {
-        private readonly ISerieRepository serieRepository;
-        public SeriesController(ISerieRepository serieRepository)
+        private readonly ITemporadaRepository temporadaRepository;
+        public TemporadaController(ITemporadaRepository temporadaRepository)
         {
-            this.serieRepository = serieRepository;
+            this.temporadaRepository = temporadaRepository;
         }
 
-        // GET: Series
+        // GET: Temporada
         public ActionResult Index()
         {
-            var model = new SeriesIndexViewModel();
-            model.ListaSerie = serieRepository.GetAll();
-            return View(model);
+            return View();
         }
 
-        // GET: Series/Details/5
+        // GET: Temporada/Details/5
         public ActionResult Details(int id)
         {
-            var model = new SeriesDetailsViewModel();
-            model.Serie = serieRepository.GetById(id);
+            var model = new TemporadaDetailsViewModel();
+            var temporada = temporadaRepository.Get(id);
+            model.Temporada = temporada;
             return View(model);
         }
 
-        // GET: Series/Create
-        public ActionResult Create()
+        // GET: Temporada/Create
+        public ActionResult Create(int id)
         {
-            var model = new SeriesCreateViewModel();
+            var model = new TemporadaCreateViewModel()
+            {
+                SerieId = id
+            };
             return View(model);
         }
 
-        // POST: Series/Create
+        // POST: Temporada/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(SeriesCreateViewModel model)
+        public ActionResult Create(TemporadaCreateViewModel model)
         {
             try
             {
-                serieRepository.Insert(new Serie() 
-                { 
-                    Nome = model.Nome
+                temporadaRepository.Insert(new Temporada()
+                {
+                    Nome = model.Nome,
+                    SerieId = model.SerieId
                 });
 
                 return RedirectToAction(nameof(Index));
@@ -59,13 +62,13 @@ namespace MovieMark.Controllers
             }
         }
 
-        // GET: Series/Edit/5
+        // GET: Temporada/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: Series/Edit/5
+        // POST: Temporada/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -82,13 +85,13 @@ namespace MovieMark.Controllers
             }
         }
 
-        // GET: Series/Delete/5
+        // GET: Temporada/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: Series/Delete/5
+        // POST: Temporada/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
