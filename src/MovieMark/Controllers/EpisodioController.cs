@@ -1,62 +1,59 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MovieMark.Repository;
 using static MovieMark.Models.DatabaseMode;
-using static MovieMark.Models.TemporadaViewModels;
+using static MovieMark.Models.EpisodioViewModels;
 
 namespace MovieMark.Controllers
 {
-    [Authorize]
-    public class TemporadaController : Controller
+    public class EpisodioController : Controller
     {
-        private readonly ITemporadaRepository temporadaRepository;
-        public TemporadaController(ITemporadaRepository temporadaRepository)
+        private readonly IEpisodioRepository episodioRepository;
+
+        public EpisodioController(IEpisodioRepository episodioRepository)
         {
-            this.temporadaRepository = temporadaRepository;
+            this.episodioRepository = episodioRepository;
         }
 
-        // GET: Temporada
-        public ActionResult Index(int id = 0)
+        // GET: Episodio
+        public ActionResult Index()
         {
-            var model = new TemporadaIndexViewModel();
-            model.ListaTemporada = temporadaRepository.GetAll(id);
             return View();
         }
 
-        // GET: Temporada/Details/5
+        // GET: Episodio/Details/5
         public ActionResult Details(int id)
         {
-            var model = new TemporadaDetailsViewModel();
-            var temporada = temporadaRepository.Get(id);
-            model.Temporada = temporada;
-            return View(model);
+            return View();
         }
 
-        // GET: Temporada/Create
+        // GET: Episodio/Create
         public ActionResult Create(int id)
         {
-            var model = new TemporadaCreateViewModel()
-            {
-                SerieId = id
-            };
-            return View(model);
+            return View(new EpisodioCreateViewModel() 
+            { 
+                TemporadaId = id
+            });
         }
 
-        // POST: Temporada/Create
+        // POST: Episodio/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(TemporadaCreateViewModel model)
+        public ActionResult Create(EpisodioCreateViewModel model)
         {
             try
             {
-                temporadaRepository.Insert(new Temporada()
-                {
+                episodioRepository.Insert(new Episodio() 
+                { 
                     Nome = model.Nome,
-                    SerieId = model.SerieId
+                    TemporadaId = model.TemporadaId
                 });
 
-                return RedirectToAction("Details", "Series", new { id = model.SerieId });
+                return RedirectToAction(nameof(Index));
             }
             catch
             {
@@ -64,13 +61,13 @@ namespace MovieMark.Controllers
             }
         }
 
-        // GET: Temporada/Edit/5
+        // GET: Episodio/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: Temporada/Edit/5
+        // POST: Episodio/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -87,13 +84,13 @@ namespace MovieMark.Controllers
             }
         }
 
-        // GET: Temporada/Delete/5
+        // GET: Episodio/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: Temporada/Delete/5
+        // POST: Episodio/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)

@@ -8,6 +8,15 @@ namespace MovieMark.Models
 {
     public class TemporadaViewModels
     {
+        public class TemporadaIndexViewModel
+        {
+            public List<Temporada> ListaTemporada { get; set; }
+            public TemporadaIndexViewModel()
+            {
+                ListaTemporada = new List<Temporada>();
+            }
+        }
+
         public class TemporadaDetailsViewModel
         {
             public Temporada Temporada { get; set; }

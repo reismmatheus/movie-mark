@@ -9,7 +9,7 @@ namespace MovieMark.Repository
     public interface ITemporadaRepository
     {
         void Insert(Temporada temporada);
-        List<Temporada> GetAll();
+        List<Temporada> GetAll(int id = 0);
         Temporada Get(int id);
     }
 }

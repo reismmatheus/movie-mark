@@ -125,7 +125,6 @@ C:\www\movie-mark\src\MovieMark\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\
 C:\www\movie-mark\src\MovieMark\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\www\movie-mark\src\MovieMark\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\www\movie-mark\src\MovieMark\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-C:\www\movie-mark\src\MovieMark\obj\Debug\netcoreapp3.1\MovieMark.csprojAssemblyReference.cache
 C:\www\movie-mark\src\MovieMark\obj\Debug\netcoreapp3.1\MovieMark.csproj.CoreCompileInputs.cache
 C:\www\movie-mark\src\MovieMark\obj\Debug\netcoreapp3.1\MovieMark.MvcApplicationPartsAssemblyInfo.cs
 C:\www\movie-mark\src\MovieMark\obj\Debug\netcoreapp3.1\MovieMark.MvcApplicationPartsAssemblyInfo.cache
@@ -163,3 +162,5 @@ C:\www\movie-mark\src\MovieMark\obj\Debug\netcoreapp3.1\MovieMark.pdb
 C:\www\movie-mark\src\MovieMark\obj\Debug\netcoreapp3.1\MovieMark.genruntimeconfig.cache
 C:\www\movie-mark\src\MovieMark\obj\Debug\netcoreapp3.1\Razor\Views\Series\Create.cshtml.g.cs
 C:\www\movie-mark\src\MovieMark\obj\Debug\netcoreapp3.1\Razor\Views\Temporada\Create.cshtml.g.cs
+C:\www\movie-mark\src\MovieMark\obj\Debug\netcoreapp3.1\Razor\Views\Temporada\Details.cshtml.g.cs
+C:\www\movie-mark\src\MovieMark\obj\Debug\netcoreapp3.1\Razor\Views\Episodio\Create.cshtml.g.cs

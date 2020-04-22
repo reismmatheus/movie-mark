@@ -13,7 +13,7 @@
                     <h2>@Model.Temporada.Nome</h2>
                 </div>
                 <div class="py-2 bd-highlight">
-                    <button type="button" class="btn btn-primary" onclick="AddTemporada(@Model.Temporada.Id)">Adicionar Temporada</button>
+                    <button type="button" class="btn btn-primary" onclick="AddEpisodio(@Model.Temporada.Id)">Adicionar Episodio</button>
                 </div>
             </div>
         </div>
@@ -22,7 +22,11 @@
         <div class="col-12">
             @foreach (var episodio in Model.Temporada.ListaEpisodio)
             {
-                <p>@episodio.Nome</p>
+                <div class="d-flex justify-content-between">
+                    <div class="py-2 bd-highlight">
+                        <p>@episodio.Nome</p>
+                    </div>
+                </div>
             }
         </div>
     </div>
@@ -30,4 +34,9 @@
 
 
 @section Scripts {
+    <script>
+        function AddEpisodio(id) {
+            window.location.href = "@Url.Action("Create", "Episodio")/" + id;
+        }
+    </script>
 }

@@ -25,18 +25,17 @@ namespace MovieMark.Repository
             contexto.SaveChanges();
         }
 
-        public List<Temporada> GetAll()
+        public List<Temporada> GetAll(int id = 0)
         {
-            return contexto.Set<Temporada>().ToList();
+            return id == 0 ? contexto.Set<Temporada>().ToList() : contexto.Set<Temporada>().Where(x => x.SerieId == id).ToList();
         }
 
         public Temporada Get(int id)
         {
             var temporada = contexto.Set<Temporada>().Where(x => x.Id == id).FirstOrDefault();
-            foreach (var episodio in temporada.ListaEpisodio)
-            {
-                temporada.ListaEpisodio.AddRange(contexto.Set<Episodio>().Where(x => x.TemporadaId == temporada.Id).ToList());
-            }
+
+            temporada.ListaEpisodio.AddRange(contexto.Set<Episodio>().Where(x => x.TemporadaId == temporada.Id).ToList());
+
             return temporada;
         }
 

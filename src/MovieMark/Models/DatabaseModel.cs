@@ -21,6 +21,10 @@ namespace MovieMark.Models
             [Required]
             public string Nome { get; set; }
             public List<Temporada> ListaTemporada { get; set; }
+            public Serie()
+            {
+                ListaTemporada = new List<Temporada>();
+            }
         }
 
         public class Temporada : BaseModel
@@ -29,6 +33,10 @@ namespace MovieMark.Models
             public string Nome { get; set; }
             public List<Episodio> ListaEpisodio { get; set; }
             public int SerieId { get; set; }
+            public Temporada()
+            {
+                ListaEpisodio = new List<Episodio>();
+            }
         }
 
         public class Episodio : BaseModel

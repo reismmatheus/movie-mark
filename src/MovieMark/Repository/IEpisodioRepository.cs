@@ -6,7 +6,7 @@ using static MovieMark.Models.DatabaseMode;
 
 namespace MovieMark.Repository
 {
-    interface IEpisodioRepository
+    public interface IEpisodioRepository
     {
         void Insert(Episodio episodio);
         Episodio Get(int id);
