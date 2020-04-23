@@ -7,6 +7,14 @@ using static MovieMark.Models.DatabaseMode;
 
 namespace MovieMark.Repository
 {
+    public interface ISerieRepository
+    {
+        void Insert(Serie serie);
+        List<Serie> GetAll();
+        Serie Get(int id);
+        bool Update(Serie serie);
+        bool Delete(int id);
+    }
     public class SerieRepository : ISerieRepository
     {
         private readonly ApplicationDbContext contexto;
@@ -41,7 +49,7 @@ namespace MovieMark.Repository
             return listaSerie;
         }
 
-        public Serie GetById(int id)
+        public Serie Get(int id)
         {
             var serie = contexto.Set<Serie>().FirstOrDefault(x => x.Id == id);
             var listaTemporada = contexto.Set<Temporada>().Where(x => x.SerieId == serie.Id).ToList();
@@ -52,6 +60,31 @@ namespace MovieMark.Repository
             }
             serie.ListaTemporada = listaTemporada;
             return serie;
+        }
+
+        public bool Update(Serie serie)
+        {
+            var getSerie = contexto.Set<Serie>().FirstOrDefault(x => x.Id == serie.Id);
+            if(getSerie == null)
+            {
+                return false;
+            }
+            getSerie.Nome = serie.Nome;
+            contexto.Set<Serie>().Update(getSerie);
+            contexto.SaveChanges();
+            return true;
+        }
+
+        public bool Delete(int id)
+        {
+            var getSerie = contexto.Set<Serie>().FirstOrDefault(x => x.Id == id);
+            if(getSerie == null)
+            {
+                return false;
+            }
+            contexto.Set<Serie>().Remove(getSerie);
+            contexto.SaveChanges();
+            return true;
         }
     }
 }

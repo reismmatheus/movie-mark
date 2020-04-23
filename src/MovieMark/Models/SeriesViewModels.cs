@@ -31,5 +31,12 @@ namespace MovieMark.Models
         {
             public string Nome { get; set; }
         }
+
+
+        public class SeriesEditViewModel
+        {
+            public int Id { get; set; }
+            public string Nome { get; set; }
+        }
     }
 }

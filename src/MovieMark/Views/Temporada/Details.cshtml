@@ -20,11 +20,11 @@
     </div>
     <div class="row">
         <div class="col-12">
-            @foreach (var episodio in Model.Temporada.ListaEpisodio)
+            @for (int i = 0; i < Model.Temporada.ListaEpisodio.Count; i++)
             {
                 <div class="d-flex justify-content-between">
                     <div class="py-2 bd-highlight">
-                        <p>@episodio.Nome</p>
+                        <p>@($"Episódio {i}: {Model.Temporada.ListaEpisodio[i].Nome}")</p>
                     </div>
                 </div>
             }

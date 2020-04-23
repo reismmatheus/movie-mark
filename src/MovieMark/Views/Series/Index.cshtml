@@ -7,6 +7,7 @@
 
 
 @section Css {
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
 }
@@ -19,7 +20,9 @@
                     <h2>Todas as Séries</h2>
                 </div>
                 <div class="py-2 bd-highlight">
-                    <button type="button" class="btn btn-primary" onclick="AddSerie()">Adicionar Série</button>
+                    <button type="button" class="btn btn-primary" onclick="AddSerie()">
+                        <i class="fa fa-plus"></i> Adicionar Série
+                    </button>
                 </div>
             </div>
         </div>
@@ -42,16 +45,22 @@
                     {
                         <tr>
                             <td>
-                                <a asp-action="Details" asp-route-id="@serie.Id" class="btn btn-primary">V</a>
+                                <a asp-action="Details" asp-route-id="@serie.Id" class="btn btn-primary">
+                                    <i class="fa fa-eye"></i>
+                                </a>
                             </td>
                             <td>@serie.Nome</td>
                             <td>@serie.ListaTemporada.Count</td>
                             <td>0</td>
                             <td>
-                                <button type="button" class="btn btn-warning">E</button>
+                                <button type="button" class="btn btn-warning" onclick="EditSerie(@serie.Id)">
+                                    <i class="fa fa-edit"></i>
+                                </button>
                             </td>
                             <td>
-                                <button type="button" class="btn btn-danger">X</button>
+                                <button type="button" class="btn btn-danger" onclick="DeleteSerie(@serie.Id)">
+                                    <i class="fa fa-times"></i>
+                                </button>
                             </td>
                         </tr>
                     }
@@ -84,6 +93,24 @@
     <script>
         function AddSerie() {
             window.location.href = "@Url.Action("Create", "Series")"
+        }
+
+        function EditSerie(id) {
+            window.location.href = "@Url.Action("Edit", "Series")/" + id;
+        }
+
+        function DeleteSerie(id) {
+            $.ajax({
+                type: "DELETE",
+                url: "@Url.Action("Delete", "Series")",
+                data: { id },
+                success: function (data) {
+                    console.log(data)
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            });
         }
 
         //DataTable

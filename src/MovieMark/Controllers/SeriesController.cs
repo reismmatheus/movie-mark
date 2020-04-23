@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MovieMark.Repository;
+using System;
 using static MovieMark.Models.DatabaseMode;
 using static MovieMark.Models.SeriesViewModels;
 
@@ -28,7 +29,7 @@ namespace MovieMark.Controllers
         public ActionResult Details(int id)
         {
             var model = new SeriesDetailsViewModel();
-            model.Serie = serieRepository.GetById(id);
+            model.Serie = serieRepository.Get(id);
             return View(model);
         }
 
@@ -62,47 +63,39 @@ namespace MovieMark.Controllers
         // GET: Series/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var serie = serieRepository.Get(id);
+            return View(new SeriesEditViewModel() 
+            { 
+                Id = id,
+                Nome = serie.Nome
+            });
         }
 
         // POST: Series/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(SeriesEditViewModel model)
         {
-            try
-            {
-                // TODO: Add update logic here
+            var update = serieRepository.Update(new Serie() 
+            { 
+                Id = model.Id,
+                Nome = model.Nome
+            });
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction(nameof(Index));
         }
 
-        // GET: Series/Delete/5
-        public ActionResult Delete(int id)
+        // Series/Delete/5
+        [HttpDelete]
+        //[ValidateAntiForgeryToken]
+        public JsonResult Delete(int id)
         {
-            return View();
-        }
-
-        // POST: Series/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
+            var delete = serieRepository.Delete(id);
+            if (!delete)
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
+                return Json(new { message = $"", success = false });
             }
-            catch
-            {
-                return View();
-            }
+            return Json(new { message = $"Série com o ID {id} excluida com sucesso", success = true });
         }
     }
 }

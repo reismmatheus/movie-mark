@@ -7,6 +7,14 @@ using static MovieMark.Models.DatabaseMode;
 
 namespace MovieMark.Repository
 {
+    public interface IEpisodioRepository
+    {
+        void Insert(Episodio episodio);
+        Episodio Get(int id);
+        List<Episodio> GetAll();
+        List<Episodio> GetByIdTemporada(int id);
+    }
+
     public class EpisodioRepository : IEpisodioRepository
     {
         private readonly ApplicationDbContext context;
