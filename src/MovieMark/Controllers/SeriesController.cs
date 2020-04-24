@@ -12,16 +12,36 @@ namespace MovieMark.Controllers
     public class SeriesController : Controller
     {
         private readonly ISerieRepository serieRepository;
-        public SeriesController(ISerieRepository serieRepository)
+        private readonly ITemporadaRepository temporadaRepository;
+        private readonly IEpisodioRepository episodioRepository;
+        public SeriesController(ISerieRepository serieRepository, ITemporadaRepository temporadaRepository, IEpisodioRepository episodioRepository)
         {
             this.serieRepository = serieRepository;
+            this.temporadaRepository = temporadaRepository;
+            this.episodioRepository = episodioRepository;
         }
 
         // GET: Series
         public ActionResult Index()
         {
             var model = new SeriesIndexViewModel();
-            model.ListaSerie = serieRepository.GetAll();
+            var getSeries = serieRepository.GetAll();
+            foreach (var serie in getSeries)
+            {
+                int episodioQuantidade = 0;
+                var getTemporada = temporadaRepository.GetByIdSerie(serie.Id);
+                foreach (var temporada in getTemporada)
+                {
+                    episodioQuantidade += temporada.ListaEpisodio.Count;
+                }
+                model.ListaSerie.Add(new SerieIndex() 
+                { 
+                    Id = serie.Id,
+                    Nome = serie.Nome,
+                    TemporadaQuantidade = getTemporada.Count,
+                    EpisodioQuantidade = episodioQuantidade
+                });
+            }
             return View(model);
         }
 

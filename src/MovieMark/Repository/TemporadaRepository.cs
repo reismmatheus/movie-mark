@@ -10,8 +10,10 @@ namespace MovieMark.Repository
     public interface ITemporadaRepository
     {
         void Insert(Temporada temporada);
-        List<Temporada> GetAll(int id = 0);
+        List<Temporada> GetAll();
         Temporada Get(int id);
+        List<Temporada> GetByIdSerie(int id);
+        bool Update(Temporada temporada);
     }
     public class TemporadaRepository : ITemporadaRepository
     {
@@ -31,9 +33,9 @@ namespace MovieMark.Repository
             contexto.SaveChanges();
         }
 
-        public List<Temporada> GetAll(int id = 0)
+        public List<Temporada> GetAll()
         {
-            return id == 0 ? contexto.Set<Temporada>().ToList() : contexto.Set<Temporada>().Where(x => x.SerieId == id).ToList();
+            return contexto.Set<Temporada>().ToList();
         }
 
         public Temporada Get(int id)
@@ -48,6 +50,31 @@ namespace MovieMark.Repository
         public List<Temporada> GetByIdSerie(int id)
         {
             return contexto.Set<Temporada>().Where(x => x.SerieId == id).ToList();
+        }
+
+        public bool Update(Temporada temporada)
+        {
+            var getTemporada = contexto.Set<Temporada>().FirstOrDefault(x => x.Id == temporada.Id);
+            if (getTemporada == null)
+            {
+                return false;
+            }
+            getTemporada.Nome = temporada.Nome;
+            contexto.Set<Temporada>().Update(getTemporada);
+            contexto.SaveChanges();
+            return true;
+        }
+
+        public bool Delete(int id)
+        {
+            var getTemporada = contexto.Set<Temporada>().FirstOrDefault(x => x.Id == id);
+            if (getTemporada == null)
+            {
+                return false;
+            }
+            contexto.Set<Temporada>().Remove(getTemporada);
+            contexto.SaveChanges();
+            return true;
         }
     }
 }

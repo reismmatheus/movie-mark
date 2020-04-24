@@ -10,18 +10,35 @@ namespace MovieMark.Controllers
     [Authorize]
     public class TemporadaController : Controller
     {
+        private readonly ISerieRepository serieRepository;
         private readonly ITemporadaRepository temporadaRepository;
-        public TemporadaController(ITemporadaRepository temporadaRepository)
+        private readonly IEpisodioRepository episodioRepository;
+        public TemporadaController(ITemporadaRepository temporadaRepository, ISerieRepository serieRepository, IEpisodioRepository episodioRepository)
         {
+            this.serieRepository = serieRepository;
             this.temporadaRepository = temporadaRepository;
+            this.episodioRepository = episodioRepository;
         }
 
         // GET: Temporada
         public ActionResult Index(int id = 0)
         {
             var model = new TemporadaIndexViewModel();
-            model.ListaTemporada = temporadaRepository.GetAll(id);
-            return View();
+            var temporadas = temporadaRepository.GetAll();
+            foreach (var temporada in temporadas)
+            {
+                var getTemporada = episodioRepository.GetByTemporadaId(temporada.Id);
+                var getSerie = serieRepository.Get(temporada.SerieId);
+                model.ListaTemporada.Add(new TemporadaIndex()
+                {
+                    Id = temporada.Id,
+                    Nome = temporada.Nome,
+                    SerieId = temporada.SerieId,
+                    SerieNome = getSerie.Nome,
+                    EpisodioQuantidade = getTemporada.Count
+                });
+            }
+            return View(model);
         }
 
         // GET: Temporada/Details/5
@@ -48,43 +65,41 @@ namespace MovieMark.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(TemporadaCreateViewModel model)
         {
-            try
+            temporadaRepository.Insert(new Temporada()
             {
-                temporadaRepository.Insert(new Temporada()
-                {
-                    Nome = model.Nome,
-                    SerieId = model.SerieId
-                });
+                Nome = model.Nome,
+                SerieId = model.SerieId
+            });
 
-                return RedirectToAction("Details", "Series", new { id = model.SerieId });
-            }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction("Details", "Series", new { id = model.SerieId });
         }
 
         // GET: Temporada/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var temporada = temporadaRepository.Get(id);
+            return View(new TemporadaEditViewModel() 
+            { 
+                Id = temporada.Id,
+                Nome = temporada.Nome
+            });
         }
 
         // POST: Temporada/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(TemporadaEditViewModel model)
         {
-            try
+            var update = temporadaRepository.Update(new Temporada()
             {
-                // TODO: Add update logic here
-
+                Id = model.Id,
+                Nome = model.Nome
+            });
+            if (update)
+            {
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View(model);
         }
 
         // GET: Temporada/Delete/5

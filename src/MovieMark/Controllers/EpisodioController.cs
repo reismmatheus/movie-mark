@@ -22,7 +22,19 @@ namespace MovieMark.Controllers
         // GET: Episodio
         public ActionResult Index()
         {
-            return View();
+            var model = new EpisodioIndexViewModel();
+            var getEpisodios = episodioRepository.GetAll();
+            foreach (var episodio in getEpisodios)
+            {
+                model.ListaEpisodio.Add(new EpisodioIndex()
+                {
+                    Id = episodio.Id,
+                    Nome = episodio.Nome,
+                    SerieNome = "S",
+                    TemporadaNome = "T"
+                });
+            }
+            return View(model);
         }
 
         // GET: Episodio/Details/5
@@ -64,24 +76,25 @@ namespace MovieMark.Controllers
         // GET: Episodio/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var episodio = episodioRepository.Get(id);
+            return View(new EpisodioEditViewModel() 
+            { 
+                Id = episodio.Id,
+                Nome = episodio.Nome
+            });
         }
 
         // POST: Episodio/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(EpisodioEditViewModel model)
         {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var update = episodioRepository.Update(new Episodio() 
+            { 
+                Id = model.Id,
+                Nome = model.Nome
+            });
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Episodio/Delete/5

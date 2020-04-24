@@ -5,6 +5,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@section Css {
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+}
+
 <div class="container">
     <div class="row">
         <div class="col-12">
@@ -13,7 +17,7 @@
                     <h2>@Model.Serie.Nome</h2>
                 </div>
                 <div class="py-2 bd-highlight">
-                    <button type="button" class="btn btn-primary" onclick="AddTemporada(@Model.Serie.Id)">Adicionar Temporada</button>
+                    <button type="button" class="btn btn-primary" onclick="Add(@Model.Serie.Id)">Adicionar Temporada</button>
                 </div>
             </div>
         </div>
@@ -25,7 +29,6 @@
                 {
                     <div class="card">
                         <div class="card-header" id="heading-@(temporada.Id)">
-
                             <div class="d-flex justify-content-between">
                                 <div class="py-2 bd-highlight">
                                     <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse-@(temporada.Id)" aria-expanded="false" aria-controls="collapse-@(temporada.Id)">
@@ -33,16 +36,22 @@
                                     </button>
                                 </div>
                                 <div class="py-2 bd-highlight">
-                                    <button type="button" class="btn btn-primary" onclick="ViewTemporada(@temporada.Id)">V</button>
+                                    <button type="button" class="btn btn-primary" onclick="View(@temporada.Id)">
+                                        <i class="fa fa-eye"></i>
+                                    </button>
                                 </div>
                             </div>
                         </div>
                         <div id="collapse-@(temporada.Id)" class="collapse" aria-labelledby="heading-@(temporada.Id)" data-parent="#accordion-@(Model.Serie.Id)">
                             <div class="card-body">
-                                @for (int i = 0; i < temporada.ListaEpisodio.Count; i++)
-                                {
-                                    <p>Episódio @(i + 1) - @temporada.ListaEpisodio[i].Nome</p>
-                                }
+                                <div class="row">
+                                    <div class="col-12">
+                                        @for (int i = 0; i < temporada.ListaEpisodio.Count; i++)
+                                        {
+                                            <p>Episódio @(i + 1) - @temporada.ListaEpisodio[i].Nome</p>
+                                        }
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -55,11 +64,11 @@
 
 @section Scripts {
     <script>
-        function AddTemporada(id) {
+        function Add(id) {
             window.location.href = "@Url.Action("Create", "Temporada")/" + id;
         }
 
-        function ViewTemporada(id) {
+        function View(id) {
             window.location.href = "@Url.Action("Details", "Temporada")/" + id;
         }
     </script>

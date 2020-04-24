@@ -12,41 +12,68 @@ namespace MovieMark.Repository
         void Insert(Episodio episodio);
         Episodio Get(int id);
         List<Episodio> GetAll();
-        List<Episodio> GetByIdTemporada(int id);
+        List<Episodio> GetByTemporadaId(int id);
+        bool Update(Episodio episodio);
+        bool Delete(int id);
     }
 
     public class EpisodioRepository : IEpisodioRepository
     {
-        private readonly ApplicationDbContext context;
+        private readonly ApplicationDbContext contexto;
 
         public EpisodioRepository()
         {
         }
 
-        public EpisodioRepository(ApplicationDbContext context)
+        public EpisodioRepository(ApplicationDbContext contexto)
         {
-            this.context = context;
+            this.contexto = contexto;
+        }
+
+        public bool Delete(int id)
+        {
+            var getEpisodio = contexto.Set<Episodio>().FirstOrDefault(x => x.Id == id);
+            if (getEpisodio == null)
+            {
+                return false;
+            }
+            contexto.Set<Episodio>().Remove(getEpisodio);
+            contexto.SaveChanges();
+            return true;
         }
 
         public Episodio Get(int id)
         {
-            return context.Set<Episodio>().FirstOrDefault(x => x.Id == id);
+            return contexto.Set<Episodio>().FirstOrDefault(x => x.Id == id);
         }
 
         public List<Episodio> GetAll()
         {
-            return context.Set<Episodio>().ToList();
+            return contexto.Set<Episodio>().ToList();
         }
 
-        public List<Episodio> GetByIdTemporada(int id)
+        public List<Episodio> GetByTemporadaId(int id)
         {
-            return context.Set<Episodio>().Where(x => x.TemporadaId == id).ToList();
+            return contexto.Set<Episodio>().Where(x => x.TemporadaId == id)?.ToList();
         }
 
         public void Insert(Episodio episodio)
         {
-            context.Set<Episodio>().Add(episodio);
-            context.SaveChanges();
+            contexto.Set<Episodio>().Add(episodio);
+            contexto.SaveChanges();
+        }
+
+        public bool Update(Episodio episodio)
+        {
+            var getEpisodio = contexto.Set<Episodio>().FirstOrDefault(x => x.Id == episodio.Id);
+            if (getEpisodio == null)
+            {
+                return false;
+            }
+            getEpisodio.Nome = episodio.Nome;
+            contexto.Set<Episodio>().Update(getEpisodio);
+            contexto.SaveChanges();
+            return true;
         }
     }
 }

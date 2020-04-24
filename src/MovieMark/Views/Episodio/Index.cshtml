@@ -1,4 +1,4 @@
-﻿@model MovieMark.Models.SeriesViewModels.SeriesIndexViewModel
+﻿@model MovieMark.Models.EpisodioViewModels.EpisodioIndexViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -17,13 +17,13 @@
         <div class="col-12">
             <div class="d-flex justify-content-between">
                 <div class="py-2 bd-highlight">
-                    <h2>Todas as Séries</h2>
+                    <h2>Todas os Episódios</h2>
                 </div>
-                <div class="py-2 bd-highlight">
+                @*<div class="py-2 bd-highlight">
                     <button type="button" class="btn btn-primary" onclick="AddSerie()">
                         <i class="fa fa-plus"></i> Adicionar Série
                     </button>
-                </div>
+                </div>*@
             </div>
         </div>
     </div>
@@ -32,33 +32,27 @@
             <table id="table-temporada" class="table table-striped table-bordered">
                 <thead>
                     <tr>
-                        <th></th>
                         <th>Nome</th>
-                        <th>Temporadas</th>
-                        <th>Episódios</th>
+                        <th>Temporada</th>
+                        <th>Série</th>
                         <th></th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var serie in Model.ListaSerie)
+                    @foreach (var episodio in Model.ListaEpisodio)
                     {
                         <tr>
+                            <td>@episodio.Nome</td>
+                            <td>@episodio.TemporadaNome</td>
+                            <td>@episodio.SerieNome</td>
                             <td>
-                                <a asp-action="Details" asp-route-id="@serie.Id" class="btn btn-primary">
-                                    <i class="fa fa-eye"></i>
-                                </a>
-                            </td>
-                            <td>@serie.Nome</td>
-                            <td>@serie.TemporadaQuantidade</td>
-                            <td>@serie.EpisodioQuantidade</td>
-                            <td>
-                                <button type="button" class="btn btn-warning" onclick="EditSerie(@serie.Id)">
+                                <button type="button" class="btn btn-warning" onclick="Edit(@episodio.Id)">
                                     <i class="fa fa-edit"></i>
                                 </button>
                             </td>
                             <td>
-                                <button type="button" class="btn btn-danger" onclick="DeleteSerie(@serie.Id)">
+                                <button type="button" class="btn btn-danger" onclick="Delete(@episodio.Id)">
                                     <i class="fa fa-times"></i>
                                 </button>
                             </td>
@@ -67,20 +61,6 @@
                 </tbody>
             </table>
         </div>
-
-        @*@foreach (var serie in Model.ListaSerie)
-            {
-                <div class="col-4">
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="https://www.4devs.com.br/4devs_gerador_imagem.php?acao=gerar_imagem&txt_largura=288&txt_altura=188&extensao=png&fundo_r=0.8756103515625&fundo_g=0.8756103515625&fundo_b=0.8756103515625&texto_r=0&texto_g=0&texto_b=0&texto=Imagem&tamanho_fonte=10" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title">@serie.Nome</h5>
-                            <p class="card-text">@serie.ListaTemporada.Count Temporada(s)</p>
-                            <a href="@Url.Action("Details", "Series", new { id = serie.Id })" class="btn btn-primary">Adicionar Temporada</a>
-                        </div>
-                    </div>
-                </div>
-            }*@
     </div>
 </div>
 
@@ -92,19 +72,14 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
     <script>
-        function AddSerie() {
-            window.location.href = "@Url.Action("Create", "Series")"
+        function Edit(id) {
+            window.location.href = "@Url.Action("Edit", "Episodio")/" + id;
         }
 
-        function EditSerie(id) {
-            window.location.href = "@Url.Action("Edit", "Series")/" + id;
-        }
-
-        function DeleteSerie(id) {
-
+        function Delete(id) {
             Swal.fire({
                 title: 'Excluir?',
-                text: "Você tem certeza que quer excluir está série?",
+                text: "Você tem certeza que quer excluir este episódio?",
                 icon: 'error',
                 showCancelButton: true,
                 confirmButtonText: 'Sim',
@@ -113,7 +88,7 @@
                 if (result.value) {
                     $.ajax({
                         type: "DELETE",
-                        url: "@Url.Action("Delete", "Series")",
+                        url: "@Url.Action("Delete", "Episodio")",
                         data: { id },
                         success: function (data) {
                             if (data.success) {
@@ -134,7 +109,7 @@
                 }
             })
 
-            
+
         }
 
         //DataTable

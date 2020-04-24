@@ -8,12 +8,19 @@ namespace MovieMark.Models
 {
     public class SeriesViewModels
     {
+        public class SerieIndex
+        {
+            public int Id { get; set; }
+            public string Nome { get; set; }
+            public int TemporadaQuantidade { get; set; }
+            public int EpisodioQuantidade { get; set; }
+        }
         public class SeriesIndexViewModel
         {
-            public List<Serie> ListaSerie { get; set; }
+            public List<SerieIndex> ListaSerie { get; set; }
             public SeriesIndexViewModel()
             {
-                ListaSerie = new List<Serie>();
+                ListaSerie = new List<SerieIndex>();
             }
         }
 

@@ -8,12 +8,21 @@ namespace MovieMark.Models
 {
     public class TemporadaViewModels
     {
+        public class TemporadaIndex
+        {
+            public int Id { get; set; }
+            public string Nome { get; set; }
+            public int SerieId { get; set; }
+            public string SerieNome { get; set; }
+            public int EpisodioQuantidade { get; set; }
+        }
+
         public class TemporadaIndexViewModel
         {
-            public List<Temporada> ListaTemporada { get; set; }
+            public List<TemporadaIndex> ListaTemporada { get; set; }
             public TemporadaIndexViewModel()
             {
-                ListaTemporada = new List<Temporada>();
+                ListaTemporada = new List<TemporadaIndex>();
             }
         }
 
@@ -29,6 +38,12 @@ namespace MovieMark.Models
         {
             public string Nome { get; set; }
             public int SerieId { get; set; }
+        }
+
+        public class TemporadaEditViewModel
+        {
+            public int Id { get; set; }
+            public string Nome { get; set; }
         }
     }
 }

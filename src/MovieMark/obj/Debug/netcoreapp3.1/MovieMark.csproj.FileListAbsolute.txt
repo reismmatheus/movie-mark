@@ -166,3 +166,7 @@ C:\www\movie-mark\src\MovieMark\obj\Debug\netcoreapp3.1\Razor\Views\Temporada\De
 C:\www\movie-mark\src\MovieMark\obj\Debug\netcoreapp3.1\Razor\Views\Episodio\Create.cshtml.g.cs
 C:\www\movie-mark\src\MovieMark\obj\Debug\netcoreapp3.1\MovieMark.csprojAssemblyReference.cache
 C:\www\movie-mark\src\MovieMark\obj\Debug\netcoreapp3.1\Razor\Views\Series\Edit.cshtml.g.cs
+C:\www\movie-mark\src\MovieMark\obj\Debug\netcoreapp3.1\Razor\Views\Temporada\Index.cshtml.g.cs
+C:\www\movie-mark\src\MovieMark\obj\Debug\netcoreapp3.1\Razor\Views\Temporada\Edit.cshtml.g.cs
+C:\www\movie-mark\src\MovieMark\obj\Debug\netcoreapp3.1\Razor\Views\Episodio\Index.cshtml.g.cs
+C:\www\movie-mark\src\MovieMark\obj\Debug\netcoreapp3.1\Razor\Views\Episodio\Edit.cshtml.g.cs
