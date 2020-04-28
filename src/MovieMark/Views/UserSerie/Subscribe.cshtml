@@ -1,0 +1,107 @@
+﻿@model MovieMark.Models.UserSerieViewModels.UserSerieSubscribeViewModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section Css {
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between">
+                <div class="py-2 bd-highlight">
+                    <h2>Todas as Séries</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+
+        @foreach (var serie in Model.ListaSerie)
+            {
+                <div class="col-4">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="https://www.4devs.com.br/4devs_gerador_imagem.php?acao=gerar_imagem&txt_largura=288&txt_altura=188&extensao=png&fundo_r=0.8756103515625&fundo_g=0.8756103515625&fundo_b=0.8756103515625&texto_r=0&texto_g=0&texto_b=0&texto=Imagem&tamanho_fonte=10" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">@serie.Nome</h5>
+                            <p class="card-text">@serie.ListaTemporada.Count Temporada(s) | 0 Episódios</p>
+                            <button onclick="Subscribe(@serie.Id)" class="btn btn-primary">Inscrever-se</button>
+                        </div>
+                    </div>
+                </div>
+            }
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+        function Subscribe(id) {
+            console.log(id)
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("Subscribe", "UserSerie")",
+                data: { id },
+                success: function (data) {
+
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            });
+        }
+
+        //DataTable
+        $(document).ready(function () {
+            $('#table-temporada').DataTable({
+                "language": {
+                    "sEmptyTable": "Nenhum registro encontrado",
+                    "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                    "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sInfoThousands": ".",
+                    "sLengthMenu": "Mostrando _MENU_ resultados por página",
+                    "sLoadingRecords": "Carregando...",
+                    "sProcessing": "Processando...",
+                    "sZeroRecords": "Nenhum registro encontrado",
+                    "sSearch": "Pesquisar",
+                    "oPaginate": {
+                        "sNext": "Próximo",
+                        "sPrevious": "Anterior",
+                        "sFirst": "Primeiro",
+                        "sLast": "Último"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Ordenar colunas de forma ascendente",
+                        "sSortDescending": ": Ordenar colunas de forma descendente"
+                    },
+                    "select": {
+                        "rows": {
+                            "_": "Selecionado %d linhas",
+                            "0": "Nenhuma linha selecionada",
+                            "1": "Selecionado 1 linha"
+                        }
+                    },
+                    "buttons": {
+                        "copy": "Copiar para a área de transferência",
+                        "copyTitle": "Cópia bem sucedida",
+                        "copySuccess": {
+                            "1": "Uma linha copiada com sucesso",
+                            "_": "%d linhas copiadas com sucesso"
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+}

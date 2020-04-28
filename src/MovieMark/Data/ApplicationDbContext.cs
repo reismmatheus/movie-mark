@@ -24,6 +24,10 @@ namespace MovieMark.Data
             builder.Entity<Temporada>().HasKey(x => x.Id);
 
             builder.Entity<Episodio>().HasKey(x => x.Id);
+
+            builder.Entity<UserTemporadaEpisodio>().HasKey(x => x.Id);
+
+            builder.Entity<UserSerie>().HasMany(x => x.ListaTemporadaEpisodio).WithOne(x => x.UserSerie);
         }
     }
 }

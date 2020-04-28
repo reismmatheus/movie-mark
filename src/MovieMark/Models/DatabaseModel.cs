@@ -45,5 +45,20 @@ namespace MovieMark.Models
             public string Nome { get; set; }
             public int TemporadaId { get; set; }
         }
+
+        public class UserSerie : BaseModel
+        {
+            public string AspNetUsersId { get; set; }
+            public int SerieId { get; set; }
+            public List<UserTemporadaEpisodio> ListaTemporadaEpisodio { get; set; }
+        }
+
+        public class UserTemporadaEpisodio : BaseModel
+        {
+            public int TemporadaId { get; set; }
+            public int EpisodioId { get; set; }
+            public int UserSerieId { get; set; }
+            public UserSerie UserSerie { get; set; }
+        }
     }
 }

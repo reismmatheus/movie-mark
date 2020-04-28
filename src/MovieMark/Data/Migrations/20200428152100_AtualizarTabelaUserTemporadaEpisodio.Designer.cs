@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MovieMark.Data;
 
 namespace MovieMark.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200428152100_AtualizarTabelaUserTemporadaEpisodio")]
+    partial class AtualizarTabelaUserTemporadaEpisodio
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -308,7 +310,7 @@ namespace MovieMark.Data.Migrations
                     b.Property<int>("TemporadaId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserSerieId")
+                    b.Property<int?>("UserSerieId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -391,9 +393,7 @@ namespace MovieMark.Data.Migrations
                 {
                     b.HasOne("MovieMark.Models.DatabaseMode+UserSerie", null)
                         .WithMany("ListaTemporadaEpisodio")
-                        .HasForeignKey("UserSerieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserSerieId");
                 });
 #pragma warning restore 612, 618
         }

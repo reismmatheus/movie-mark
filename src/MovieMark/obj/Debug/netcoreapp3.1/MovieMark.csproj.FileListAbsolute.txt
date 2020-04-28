@@ -170,3 +170,7 @@ C:\www\movie-mark\src\MovieMark\obj\Debug\netcoreapp3.1\Razor\Views\Temporada\In
 C:\www\movie-mark\src\MovieMark\obj\Debug\netcoreapp3.1\Razor\Views\Temporada\Edit.cshtml.g.cs
 C:\www\movie-mark\src\MovieMark\obj\Debug\netcoreapp3.1\Razor\Views\Episodio\Index.cshtml.g.cs
 C:\www\movie-mark\src\MovieMark\obj\Debug\netcoreapp3.1\Razor\Views\Episodio\Edit.cshtml.g.cs
+C:\www\movie-mark\src\MovieMark\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Create.cshtml.g.cs
+C:\www\movie-mark\src\MovieMark\obj\Debug\netcoreapp3.1\Razor\Views\UserSerie\Index.cshtml.g.cs
+C:\www\movie-mark\src\MovieMark\obj\Debug\netcoreapp3.1\Razor\Views\UserSerie\Subscribe.cshtml.g.cs
+C:\www\movie-mark\src\MovieMark\obj\Debug\netcoreapp3.1\Razor\Views\UserSerie\Details.cshtml.g.cs

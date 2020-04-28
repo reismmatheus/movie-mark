@@ -12,6 +12,22 @@
     <Compile Remove="Data\Migrations\20200416224249_Inicial.Designer.cs" />
     <Compile Remove="Data\Migrations\20200418013649_AtualizandoRelacionamento.cs" />
     <Compile Remove="Data\Migrations\20200418013649_AtualizandoRelacionamento.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200427215720_TabelasSerieUsuario.cs" />
+    <Compile Remove="Data\Migrations\20200427215720_TabelasSerieUsuario.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200427215833_TabelasSerieUsuario.cs" />
+    <Compile Remove="Data\Migrations\20200427215833_TabelasSerieUsuario.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200427215948_TabelasSerieUsuario.cs" />
+    <Compile Remove="Data\Migrations\20200427215948_TabelasSerieUsuario.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200427220120_TabelasSerieUsuario.cs" />
+    <Compile Remove="Data\Migrations\20200427220120_TabelasSerieUsuario.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200428164939_AtualizandoRelacaoTabela.cs" />
+    <Compile Remove="Data\Migrations\20200428164939_AtualizandoRelacaoTabela.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200428165009_AtualizandoRelacaoTabela.cs" />
+    <Compile Remove="Data\Migrations\20200428165009_AtualizandoRelacaoTabela.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200428165152_AtualizandoRelacaoTabela.cs" />
+    <Compile Remove="Data\Migrations\20200428165152_AtualizandoRelacaoTabela.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200428165210_AtualizandoRelacionamento.cs" />
+    <Compile Remove="Data\Migrations\20200428165210_AtualizandoRelacionamento.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

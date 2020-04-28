@@ -1,0 +1,77 @@
+﻿@model MovieMark.Models.UserSerieViewModels.UserSerieDetailsViewModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Css {
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+}
+
+<div class="container">
+    
+    <form asp-route="Details" method="post" id="form-create">
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex justify-content-between">
+                    <div class="py-2 bd-highlight">
+                        <h2>@Model.Nome</h2>
+
+                        <input asp-for="Nome" type="hidden" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="accordion" id="accordion-@(Model.Id)">
+                    @for (int i = 0; i < Model.ListaTemporada.Count; i++)
+                    {
+                        <input asp-for="ListaTemporada[i].Id" type="hidden" />
+                        <input asp-for="ListaTemporada[i].Nome" type="hidden" />
+
+                        <div class="card">
+                            <div class="card-header" id="heading-@(Model.ListaTemporada[i].Id)">
+                                <div class="d-flex justify-content-between">
+                                    <div class="py-2 bd-highlight">
+                                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse-@(Model.ListaTemporada[i].Id)" aria-expanded="false" aria-controls="collapse-@(Model.ListaTemporada[i].Id)">
+                                            @Model.ListaTemporada[i].Nome
+                                        </button>
+                                    </div>
+                                    <div class="py-2 bd-highlight">
+                                        <button type="button" class="btn btn-primary" onclick="">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="collapse-@(Model.ListaTemporada[i].Id)" class="collapse" aria-labelledby="heading-@(Model.ListaTemporada[i].Id)" data-parent="#accordion-@(Model.Id)">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            @for (int j = 0; j < Model.ListaTemporada[i].ListaEpisodio.Count; j++)
+                                            {
+                                                <input type="checkbox" asp-for="@Model.ListaTemporada[i].ListaEpisodio[j].Selected" />
+                                                <label asp-for="@Model.ListaTemporada[i].ListaEpisodio[j].Selected">@Model.ListaTemporada[i].ListaEpisodio[j].Text</label>
+                                                <input type="hidden" asp-for="@Model.ListaTemporada[i].ListaEpisodio[j].Id" />
+                                                <input type="hidden" asp-for="@Model.ListaTemporada[i].ListaEpisodio[j].Text" />
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <button type="submit" class="btn btn-primary">Atualizar</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+@section Scripts {
+    <script>
+    </script>
+}
