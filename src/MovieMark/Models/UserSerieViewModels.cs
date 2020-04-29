@@ -17,18 +17,30 @@ namespace MovieMark.Models
                 ListaSerie = new List<Serie>();
             }
         }
+
         public class UserSerieSubscribeViewModel
         {
-            public List<Serie> ListaSerie { get; set; }
+            public List<UserSerieSubscribe> ListaSerie { get; set; }
             public UserSerieSubscribeViewModel()
             {
-                ListaSerie = new List<Serie>();
+                ListaSerie = new List<UserSerieSubscribe>();
             }
         }
+        public class UserSerieSubscribe
+        {
+            public int Id { get; set; }
+            public string Nome { get; set; }
+            public int TemporadaQuantidade { get; set; }
+            public int EpisodioQuantidade { get; set; }
+            public bool Inscricao { get; set; }
+        }
+
+
         public class UserSerieDetailsViewModel
         {
             public int Id { get; set; }
             public string Nome { get; set; }
+            public int SerieId { get; set; }
             public List<TemporadaUser> ListaTemporada { get; set; }
             public UserSerieDetailsViewModel()
             {

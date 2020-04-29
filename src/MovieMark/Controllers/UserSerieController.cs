@@ -47,33 +47,44 @@ namespace MovieMark.Controllers
         {
             var model = new UserSerieSubscribeViewModel();
             var series = serieRepository.GetAll();
-            model.ListaSerie = series;
+            var seriesCadastradas = userSerieRepository.GetByIdUser(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            foreach (var serie in series)
+            {
+                model.ListaSerie.Add(new UserSerieSubscribe() 
+                { 
+                    Id = serie.Id,
+                    Nome = serie.Nome,
+                    Inscricao = seriesCadastradas.Any(x => x.SerieId == serie.Id && x.AspNetUsersId == User.FindFirstValue(ClaimTypes.NameIdentifier))
+                });
+            }
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult Subscribe(int id)
+        public JsonResult Subscribe(int id)
         {
             userSerieRepository.Insert(new UserSerie()
             {
                 SerieId = id,
                 AspNetUsersId = User.FindFirstValue(ClaimTypes.NameIdentifier)
             });
-            return RedirectToAction(nameof(Index));
+            return Json(new { success = true });
         }
 
         [HttpPost]
         public JsonResult Unsubscribe(int id)
         {
-            return null;
+            userSerieRepository.DeleteByIdSerieIdUser(id, User.FindFirstValue(ClaimTypes.NameIdentifier));
+            return Json(new { success = true });
         }
 
         // GET: UserSerie/Details/5
         public ActionResult Details(int id)
         {
             var model = new UserSerieDetailsViewModel();
-            var userSerie = userSerieRepository.Get(id);
+            var userSerie = userSerieRepository.GetByIdUserSerieId(User.FindFirstValue(ClaimTypes.NameIdentifier), id);
             var serie = serieRepository.Get(id);
+            model.SerieId = id;
             model.Nome = serie.Nome;
             foreach (var temporada in serie.ListaTemporada)
             {
@@ -83,7 +94,8 @@ namespace MovieMark.Controllers
                     lista.Add(new EpisodioListItem()
                     {
                         Text = episodio.Nome,
-                        Id = episodio.Id
+                        Id = episodio.Id,
+                        Selected = userTemporadaEpisodioRepositoy.GetByIds(temporada.Id, episodio.Id, userSerie.Id) == null ? false : true
                     });
                 }
                 model.ListaTemporada.Add(new TemporadaUser()
@@ -99,6 +111,8 @@ namespace MovieMark.Controllers
         [HttpPost]
         public ActionResult Details(UserSerieDetailsViewModel model)
         {
+            var userSerie = userSerieRepository.GetByIdUserSerieId(User.FindFirstValue(ClaimTypes.NameIdentifier), model.SerieId);
+            var delete = userTemporadaEpisodioRepositoy.Delete(userSerie.Id);
             foreach (var temporada in model.ListaTemporada)
             {
                 foreach (var episodio in temporada.ListaEpisodio.Where(x => x.Selected))
@@ -107,11 +121,11 @@ namespace MovieMark.Controllers
                     {
                         EpisodioId = episodio.Id,
                         TemporadaId = temporada.Id,
-                        UserSerieId = model.Id
+                        UserSerieId = userSerie.Id
                     });
                 }
             }
-            return null;
+            return View(model);
         }
     }
 }

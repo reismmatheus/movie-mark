@@ -28,6 +28,16 @@
     <Compile Remove="Data\Migrations\20200428165152_AtualizandoRelacaoTabela.Designer.cs" />
     <Compile Remove="Data\Migrations\20200428165210_AtualizandoRelacionamento.cs" />
     <Compile Remove="Data\Migrations\20200428165210_AtualizandoRelacionamento.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200429133411_AtualizandoTabelas.cs" />
+    <Compile Remove="Data\Migrations\20200429133411_AtualizandoTabelas.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200429134241_AtualizandoRelacoes.cs" />
+    <Compile Remove="Data\Migrations\20200429134241_AtualizandoRelacoes.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200429134507_AtualizandoRelacoes.cs" />
+    <Compile Remove="Data\Migrations\20200429134507_AtualizandoRelacoes.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200429135351_AtualizandoRelacoes.cs" />
+    <Compile Remove="Data\Migrations\20200429135351_AtualizandoRelacoes.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200429135701_AtualizandoRelacoes.cs" />
+    <Compile Remove="Data\Migrations\20200429135701_AtualizandoRelacoes.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -18,7 +18,7 @@
                     <h2>Todas as Séries Inscritas</h2>
                 </div>
                 <div class="py-2 bd-highlight">
-                    <button type="button" class="btn btn-primary" onclick="AddSerie()">
+                    <button type="button" class="btn btn-primary" onclick="Add()">
                         <i class="fa fa-plus"></i> Adicionar Série
                     </button>
                 </div>
@@ -27,19 +27,19 @@
     </div>
     <div class="row">
         @foreach (var serie in Model.ListaSerie)
-            {
-                <div class="col-4">
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="https://www.4devs.com.br/4devs_gerador_imagem.php?acao=gerar_imagem&txt_largura=288&txt_altura=188&extensao=png&fundo_r=0.8756103515625&fundo_g=0.8756103515625&fundo_b=0.8756103515625&texto_r=0&texto_g=0&texto_b=0&texto=Imagem&tamanho_fonte=10" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title">@serie.Nome</h5>
-                            <p class="card-text">S01 | E01</p>
-                            <button class="btn btn-primary" onclick="Details(@serie.Id)">Detalhes</button>
-                            <button class="btn btn-danger">Cancelar Inscrição</button>
-                        </div>
+        {
+            <div class="col-4">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="https://www.4devs.com.br/4devs_gerador_imagem.php?acao=gerar_imagem&txt_largura=288&txt_altura=188&extensao=png&fundo_r=0.8756103515625&fundo_g=0.8756103515625&fundo_b=0.8756103515625&texto_r=0&texto_g=0&texto_b=0&texto=Imagem&tamanho_fonte=10" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">@serie.Nome</h5>
+                        <p class="card-text">S01 | E01</p>
+                        <button class="btn btn-primary" onclick="Details(@serie.Id)">Detalhes</button>
+                        <button class="btn btn-danger" onclick="Unsubscribe(@serie.Id)">Cancelar Inscrição</button>
                     </div>
                 </div>
-            }
+            </div>
+        }
     </div>
 </div>
 
@@ -47,13 +47,62 @@
 
 @section Scripts {
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
     <script>
+        function Add() {
+            window.location.href = "@Url.Action("Subscribe", "UserSerie")";
+        }
+
         function Details(id) {
             window.location.href = "@Url.Action("Details", "UserSerie")/" + id;
         }
 
         function Unsubscribe(id) {
-
+            Swal.fire({
+                title: 'Cancelar Inscrição',
+                text: "Você quer cancelar sua inscrição nesta série",
+                icon: 'warning',
+                showCancelButton: true,
+                //confirmButtonColor: '#3085d6',
+                //cancelButtonColor: '#d33',
+                confirmButtonText: 'Sim',
+                cancelButtonText: 'Não',
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("Unsubscribe", "UserSerie")",
+                        data: { id },
+                        success: function (data) {
+                            if (data.success) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Inscrição Cancelada',
+                                    text: 'Incrição cancelada com sucesso'
+                                }).then(() => {
+                                    window.location.href = "@Url.Action("Index", "UserSerie")";
+                                })
+                            }
+                            else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: 'Erro ao cancelar inscrição'
+                                })
+                            }
+                        },
+                        error: function (error) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Erro inesperado'
+                            })
+                        }
+                    });
+                }
+            })
+            
         }
     </script>
 }

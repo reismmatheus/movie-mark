@@ -32,6 +32,7 @@ namespace MovieMark.Models
             [Required]
             public string Nome { get; set; }
             public List<Episodio> ListaEpisodio { get; set; }
+            public Serie Serie { get; set; }
             public int SerieId { get; set; }
             public Temporada()
             {
@@ -43,6 +44,7 @@ namespace MovieMark.Models
         {
             [Required]
             public string Nome { get; set; }
+            public Temporada Temporada { get; set; }
             public int TemporadaId { get; set; }
         }
 
@@ -51,14 +53,20 @@ namespace MovieMark.Models
             public string AspNetUsersId { get; set; }
             public int SerieId { get; set; }
             public List<UserTemporadaEpisodio> ListaTemporadaEpisodio { get; set; }
+            public UserSerie()
+            {
+                ListaTemporadaEpisodio = new List<UserTemporadaEpisodio>();
+            }
         }
 
         public class UserTemporadaEpisodio : BaseModel
         {
+            public Temporada Temporada { get; set; }
             public int TemporadaId { get; set; }
+            public Episodio Episodio { get; set; }
             public int EpisodioId { get; set; }
-            public int UserSerieId { get; set; }
             public UserSerie UserSerie { get; set; }
+            public int UserSerieId { get; set; }
         }
     }
 }

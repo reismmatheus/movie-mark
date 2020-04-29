@@ -11,7 +11,9 @@ namespace MovieMark.Repository
     {
         UserSerie Get(int id);
         List<UserSerie> GetByIdUser(string idUser);
+        UserSerie GetByIdUserSerieId(string idUser, int serieId);
         void Insert(UserSerie userSerie);
+        bool DeleteByIdSerieIdUser(int idSerie, string idUser);
     }
     public class UserSerieRepository : IUserSerieRepository
     {
@@ -31,10 +33,21 @@ namespace MovieMark.Repository
             return contexto.Set<UserSerie>().Where(x => x.AspNetUsersId == idUser).ToList();
         }
 
+        public UserSerie GetByIdUserSerieId(string idUser, int serieId)
+        {
+            return contexto.Set<UserSerie>().Where(x => x.AspNetUsersId == idUser && x.SerieId == serieId).FirstOrDefault();
+        }
+
         public void Insert(UserSerie userSerie)
         {
             contexto.Set<UserSerie>().Add(userSerie);
             contexto.SaveChanges();
+        }
+
+        public bool DeleteByIdSerieIdUser(int idSerie, string idUser)
+        {
+            contexto.Set<UserSerie>().Remove(GetByIdUserSerieId(idUser, idSerie));
+            return contexto.SaveChanges() == 1 ? true : false;
         }
     }
 }

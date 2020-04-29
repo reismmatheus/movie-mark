@@ -19,6 +19,7 @@
                         <h2>@Model.Nome</h2>
 
                         <input asp-for="Nome" type="hidden" />
+                        <input asp-for="SerieId" type="hidden" />
                     </div>
                 </div>
             </div>
@@ -40,9 +41,6 @@
                                         </button>
                                     </div>
                                     <div class="py-2 bd-highlight">
-                                        <button type="button" class="btn btn-primary" onclick="">
-                                            <i class="fa fa-eye"></i>
-                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -64,7 +62,9 @@
                         </div>
                     }
                 </div>
-                <button type="submit" class="btn btn-primary">Atualizar</button>
+                <div class="row">
+                    <button type="submit" class="btn btn-primary d-block mx-auto mt-2">Atualizar</button>
+                </div>
             </div>
         </div>
     </form>
