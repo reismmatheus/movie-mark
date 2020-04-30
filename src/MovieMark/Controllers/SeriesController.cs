@@ -8,7 +8,7 @@ using static MovieMark.Models.SeriesViewModels;
 
 namespace MovieMark.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class SeriesController : Controller
     {
         private readonly ISerieRepository serieRepository;

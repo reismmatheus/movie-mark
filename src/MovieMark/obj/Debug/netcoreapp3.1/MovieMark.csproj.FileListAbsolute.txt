@@ -171,6 +171,16 @@ C:\www\movie-mark\src\MovieMark\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Create
 C:\www\movie-mark\src\MovieMark\obj\Debug\netcoreapp3.1\Razor\Views\UserSerie\Index.cshtml.g.cs
 C:\www\movie-mark\src\MovieMark\obj\Debug\netcoreapp3.1\Razor\Views\UserSerie\Subscribe.cshtml.g.cs
 C:\www\movie-mark\src\MovieMark\obj\Debug\netcoreapp3.1\Razor\Views\UserSerie\Details.cshtml.g.cs
+C:\www\movie-mark\src\MovieMark\bin\Debug\netcoreapp3.1\Microsoft.AspNet.Identity.Core.dll
+C:\www\movie-mark\src\MovieMark\bin\Debug\netcoreapp3.1\Microsoft.AspNet.Identity.Owin.dll
+C:\www\movie-mark\src\MovieMark\bin\Debug\netcoreapp3.1\Microsoft.Owin.dll
+C:\www\movie-mark\src\MovieMark\bin\Debug\netcoreapp3.1\Microsoft.Owin.Security.dll
+C:\www\movie-mark\src\MovieMark\bin\Debug\netcoreapp3.1\Microsoft.Owin.Security.Cookies.dll
+C:\www\movie-mark\src\MovieMark\bin\Debug\netcoreapp3.1\Microsoft.Owin.Security.OAuth.dll
+C:\www\movie-mark\src\MovieMark\bin\Debug\netcoreapp3.1\Owin.dll
 C:\www\movie-mark\src\MovieMark\obj\Debug\netcoreapp3.1\MovieMark.csproj.CoreCompileInputs.cache
 C:\www\movie-mark\src\MovieMark\obj\Debug\netcoreapp3.1\MovieMark.MvcApplicationPartsAssemblyInfo.cs
 C:\www\movie-mark\src\MovieMark\obj\Debug\netcoreapp3.1\MovieMark.MvcApplicationPartsAssemblyInfo.cache
+C:\www\movie-mark\src\MovieMark\bin\Debug\netcoreapp3.1\Microsoft.Owin.Host.SystemWeb.dll
+C:\www\movie-mark\src\MovieMark\obj\Debug\netcoreapp3.1\Razor\Views\Role\Create.cshtml.g.cs
+C:\www\movie-mark\src\MovieMark\obj\Debug\netcoreapp3.1\Razor\Views\Role\Index.cshtml.g.cs

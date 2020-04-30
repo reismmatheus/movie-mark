@@ -7,7 +7,7 @@ using static MovieMark.Models.TemporadaViewModels;
 
 namespace MovieMark.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class TemporadaController : Controller
     {
         private readonly ISerieRepository serieRepository;

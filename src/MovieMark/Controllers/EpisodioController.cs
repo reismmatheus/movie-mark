@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MovieMark.Repository;
@@ -10,13 +11,18 @@ using static MovieMark.Models.EpisodioViewModels;
 
 namespace MovieMark.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class EpisodioController : Controller
     {
+        private readonly ISerieRepository serieRepository;
+        private readonly ITemporadaRepository temporadaRepository;
         private readonly IEpisodioRepository episodioRepository;
 
-        public EpisodioController(IEpisodioRepository episodioRepository)
+        public EpisodioController(IEpisodioRepository episodioRepository, ITemporadaRepository temporadaRepository, ISerieRepository serieRepository)
         {
             this.episodioRepository = episodioRepository;
+            this.temporadaRepository = temporadaRepository;
+            this.serieRepository = serieRepository;
         }
 
         // GET: Episodio
@@ -26,13 +32,15 @@ namespace MovieMark.Controllers
             var getEpisodios = episodioRepository.GetAll();
             foreach (var episodio in getEpisodios)
             {
+                var temporada = temporadaRepository.Get(episodio.TemporadaId);
+                var serie = serieRepository.Get(temporada.SerieId);
                 model.ListaEpisodio.Add(new EpisodioIndex()
                 {
                     Id = episodio.Id,
                     Nome = episodio.Nome,
-                    SerieNome = "S",
-                    TemporadaNome = "T"
-                });
+                    SerieNome = serie.Nome,
+                    TemporadaNome = temporada.Nome
+                }); ;
             }
             return View(model);
         }

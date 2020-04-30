@@ -14,7 +14,7 @@ using static MovieMark.Models.UserSerieViewModels;
 
 namespace MovieMark.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "User")]
     public class UserSerieController : Controller
     {
         private readonly ISerieRepository serieRepository;
@@ -50,11 +50,18 @@ namespace MovieMark.Controllers
             var seriesCadastradas = userSerieRepository.GetByIdUser(User.FindFirstValue(ClaimTypes.NameIdentifier));
             foreach (var serie in series)
             {
+                int quantidadeEpisodio = 0;
+                foreach (var temporada in serie.ListaTemporada)
+                {
+                    quantidadeEpisodio += temporada.ListaEpisodio.Count;
+                }
                 model.ListaSerie.Add(new UserSerieSubscribe() 
                 { 
                     Id = serie.Id,
                     Nome = serie.Nome,
-                    Inscricao = seriesCadastradas.Any(x => x.SerieId == serie.Id && x.AspNetUsersId == User.FindFirstValue(ClaimTypes.NameIdentifier))
+                    Inscricao = seriesCadastradas.Any(x => x.SerieId == serie.Id && x.AspNetUsersId == User.FindFirstValue(ClaimTypes.NameIdentifier)),
+                    TemporadaQuantidade = serie.ListaTemporada.Count,
+                    EpisodioQuantidade = quantidadeEpisodio
                 });
             }
             return View(model);
@@ -109,7 +116,7 @@ namespace MovieMark.Controllers
         }
 
         [HttpPost]
-        public ActionResult Details(UserSerieDetailsViewModel model)
+        public JsonResult Details(UserSerieDetailsViewModel model)
         {
             var userSerie = userSerieRepository.GetByIdUserSerieId(User.FindFirstValue(ClaimTypes.NameIdentifier), model.SerieId);
             var delete = userTemporadaEpisodioRepositoy.Delete(userSerie.Id);
@@ -125,7 +132,8 @@ namespace MovieMark.Controllers
                     });
                 }
             }
-            return View(model);
+
+            return Json(new { success = true });
         }
     }
 }

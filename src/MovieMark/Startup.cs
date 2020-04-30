@@ -6,13 +6,15 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MovieMark.Data;
+using MovieMark.Repository;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MovieMark.Data;
 using Microsoft.Extensions.Hosting;
-using MovieMark.Repository;
 
 namespace MovieMark
 {
@@ -32,6 +34,7 @@ namespace MovieMark
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
@@ -77,7 +80,7 @@ namespace MovieMark
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider services)
         {
             if (env.IsDevelopment())
             {
@@ -105,6 +108,33 @@ namespace MovieMark
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+
+            CreateRoles(services).Wait();
+        }
+
+        private async Task CreateRoles(IServiceProvider serviceProvider)
+        {
+            var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var UserManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+
+            IdentityResult roleResult;
+            var roleAdmin = await RoleManager.RoleExistsAsync("Admin");
+            if (!roleAdmin)
+            {
+                roleResult = await RoleManager.CreateAsync(new IdentityRole("Admin"));
+            }
+
+            var roleUser = await RoleManager.RoleExistsAsync("User");
+            if (!roleUser)
+            {
+                roleResult = await RoleManager.CreateAsync(new IdentityRole("User"));
+            }
+            //here we are assigning the Admin role to the User that we have registered above 
+            //Now, we are assinging admin role to this user("Ali@gmail.com"). When will we run this project then it will
+            //be assigned to that user.
+            //IdentityUser user = await UserManager.FindByEmailAsync("reis.mmatheus@gmail.com");
+            //var User = new IdentityUser();
+            //await UserManager.AddToRoleAsync(user, "Admin");
         }
     }
 }
