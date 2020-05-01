@@ -45,8 +45,7 @@ namespace MovieMark.Controllers
         public ActionResult Details(int id)
         {
             var model = new TemporadaDetailsViewModel();
-            var temporada = temporadaRepository.Get(id);
-            model.Temporada = temporada;
+            model.Temporada = temporadaRepository.Get(id);
             return View(model);
         }
 

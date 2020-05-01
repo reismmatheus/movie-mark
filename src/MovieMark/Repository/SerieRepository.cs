@@ -78,7 +78,6 @@ namespace MovieMark.Repository
 
         public bool Delete(int id)
         {
-            //var teste = contexto.Set<Serie>().Include(x => x.ListaTemporada);
             var getSerie = contexto.Set<Serie>().FirstOrDefault(x => x.Id == id);
             if(getSerie == null)
             {

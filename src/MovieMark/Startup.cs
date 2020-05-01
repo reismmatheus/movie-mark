@@ -58,6 +58,8 @@ namespace MovieMark
                 options.User.AllowedUserNameCharacters =
                 "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
                 options.User.RequireUniqueEmail = false;
+
+                options.SignIn.RequireConfirmedAccount = false;
             });
 
             services.ConfigureApplicationCookie(options =>
@@ -129,12 +131,6 @@ namespace MovieMark
             {
                 roleResult = await RoleManager.CreateAsync(new IdentityRole("User"));
             }
-            //here we are assigning the Admin role to the User that we have registered above 
-            //Now, we are assinging admin role to this user("Ali@gmail.com"). When will we run this project then it will
-            //be assigned to that user.
-            //IdentityUser user = await UserManager.FindByEmailAsync("reis.mmatheus@gmail.com");
-            //var User = new IdentityUser();
-            //await UserManager.AddToRoleAsync(user, "Admin");
         }
     }
 }

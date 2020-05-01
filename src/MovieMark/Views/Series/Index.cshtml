@@ -67,20 +67,6 @@
                 </tbody>
             </table>
         </div>
-
-        @*@foreach (var serie in Model.ListaSerie)
-            {
-                <div class="col-4">
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="https://www.4devs.com.br/4devs_gerador_imagem.php?acao=gerar_imagem&txt_largura=288&txt_altura=188&extensao=png&fundo_r=0.8756103515625&fundo_g=0.8756103515625&fundo_b=0.8756103515625&texto_r=0&texto_g=0&texto_b=0&texto=Imagem&tamanho_fonte=10" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title">@serie.Nome</h5>
-                            <p class="card-text">@serie.ListaTemporada.Count Temporada(s)</p>
-                            <a href="@Url.Action("Details", "Series", new { id = serie.Id })" class="btn btn-primary">Adicionar Temporada</a>
-                        </div>
-                    </div>
-                </div>
-            }*@
     </div>
 </div>
 
@@ -121,7 +107,9 @@
                                     'Excluido!',
                                     data.message,
                                     'success'
-                                )
+                                ).then(() => {
+                                    location.reload()
+                                })
                             }
                             else {
                                 console.log(data)

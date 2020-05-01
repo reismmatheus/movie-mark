@@ -42,7 +42,7 @@ namespace MovieMark.Repository
         {
             var temporada = contexto.Set<Temporada>().Where(x => x.Id == id).FirstOrDefault();
 
-            temporada.ListaEpisodio.AddRange(contexto.Set<Episodio>().Where(x => x.TemporadaId == temporada.Id).ToList());
+            var episodio = contexto.Set<Episodio>().Where(x => x.TemporadaId == temporada.Id).ToList();
 
             return temporada;
         }
